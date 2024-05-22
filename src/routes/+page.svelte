@@ -3,7 +3,7 @@
 	import Scene from '$lib/components/threlte/Scene.svelte';
 </script>
 
-<main class="border h-[100vh]">
+<main class="h-[100vh]">
 	<Canvas>
 		<Scene />
 	</Canvas>
