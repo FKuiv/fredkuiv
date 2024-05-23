@@ -1,13 +1,18 @@
-<script>
+<script lang="ts">
 	import { T } from '@threlte/core';
 	import { Grid, OrbitControls } from '@threlte/extras';
 	import { onMount } from 'svelte';
-	import { quintInOut } from 'svelte/easing';
+	import { quadInOut, quintInOut } from 'svelte/easing';
 	import { tweened } from 'svelte/motion';
-	import { BufferGeometry, Vector3, CatmullRomCurve3 } from 'three';
+	import { BufferGeometry, Vector3, CatmullRomCurve3, Color } from 'three';
+	import { lerp, scalePercent } from '$lib/helpers/ThreeScroll';
 	let cameraXPos = tweened(100, {
 		duration: 1000,
 		easing: quintInOut
+	});
+	let cameraFOV = tweened(180, {
+		duration: 2000,
+		easing: quadInOut
 	});
 	const lineZPositions = Array.from({ length: 51 }, (_, i) => (i - 25) * 1);
 	const points = [
@@ -25,34 +30,66 @@
 	// Get points along the curve
 	const curvePoints = curve.getPoints(25);
 	const curvePoints2 = curve2.getPoints(25);
+	let cubeXPos = 0;
+	let scrollPercentage = 0;
 
 	// Create a BufferGeometry from the points
 	const lineGeo = new BufferGeometry().setFromPoints(curvePoints);
 	const lineGeo2 = new BufferGeometry().setFromPoints(curvePoints2);
+	const animationScripts: { start: number; end: number; func: () => void }[] = [];
+	animationScripts.push({
+		start: 0,
+		end: 40,
+		func: () => {
+			cubeXPos = lerp(10, 0, scalePercent(0, 100, scrollPercentage));
+			console.log(cubeXPos);
+		}
+	});
+	function animate() {
+		console.log('ANIMATINFj');
+		animationScripts.forEach((script) => {
+			if (scrollPercentage >= script.start && scrollPercentage <= script.end) {
+				script.func();
+			}
+		});
+	}
 	onMount(() => {
 		requestAnimationFrame(() => {
 			cameraXPos.set(30);
+			cameraFOV.set(60);
 		});
+		// Scroll to the top of the page
+		window.scrollTo(0, 0);
 	});
+	window.onscroll = () => {
+		//calculate the current scroll progress as a percentage
+		scrollPercentage =
+			((document.documentElement.scrollTop || document.body.scrollTop) /
+				((document.documentElement.scrollHeight || document.body.scrollHeight) -
+					document.documentElement.clientHeight)) *
+			100;
+		animate();
+	};
 </script>
 
 <T.PerspectiveCamera
 	makeDefault
-	position={[$cameraXPos, 5, 0]}
+	position={[$cameraXPos, 2, 8]}
+	fov={$cameraFOV}
 	on:create={({ ref }) => {
-		ref.lookAt(0, -1, 0);
+		// Look at the center
+		ref.lookAt(0, 0, 0);
 	}}
 >
 	<!-- <OrbitControls /> -->
 </T.PerspectiveCamera>
 
-<T.DirectionalLight intensity={0.8} position={[1, 0, 0]} />
-<T.DirectionalLight intensity={0.8} position={[0, 2, 1]} />
-<T.AmbientLight intensity={0.1} />
+<T.DirectionalLight position={[10, 0, 10]} intensity={1} />
+<T.AmbientLight intensity={1} />
 
-<T.Mesh position={[0, 5, 0]}>
-	<T.BoxGeometry args={[2, 2, 2]} />
-	<T.MeshStandardMaterial color="white" />
+<T.Mesh position={[10, 2, 0]}>
+	<T.BoxGeometry args={[1, 1, 1]} />
+	<T.MeshStandardMaterial color={new Color(0x00ff00)} />
 </T.Mesh>
 
 <!-- Floor grid -->
