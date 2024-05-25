@@ -7,5 +7,7 @@
 	<Canvas>
 		<Scene />
 	</Canvas>
+
+	<!-- Scrollable area -->
 	<div class="h-[200vw]" />
 </main>
