@@ -3,6 +3,8 @@
 	import InitialEnvironment from './InitialEnvironment.svelte';
 	import { animationScripts, scrollPercent } from '$lib/store';
 	import InitialForeground from './InitialForeground.svelte';
+	import { scrollSections } from '$lib/helpers/AnimationScrollSections';
+	import LightAndCamera from './LightAndCamera.svelte';
 
 	const { renderer } = useThrelte();
 	renderer.localClippingEnabled = true;
@@ -29,5 +31,9 @@
 	};
 </script>
 
-<InitialEnvironment />
-<InitialForeground />
+<LightAndCamera />
+
+{#if $scrollPercent <= scrollSections[1].end}
+	<InitialEnvironment />
+	<InitialForeground />
+{/if}
