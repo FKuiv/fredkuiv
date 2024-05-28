@@ -1,6 +1,6 @@
 <script>
 	import { Canvas } from '@threlte/core';
-	import Scene from '$lib/components/threlte/Scene.svelte';
+	import Scene from '$lib/components/Scene.svelte';
 </script>
 
 <main class="h-[100vh] w-[100vw]">
@@ -9,5 +9,5 @@
 	</Canvas>
 
 	<!-- Scrollable area -->
-	<div class="h-[200vw]" />
+	<div class="h-[600vw]" />
 </main>

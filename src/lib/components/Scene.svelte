@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { useThrelte } from '@threlte/core';
-	import InitialEnvironment from './InitialEnvironment.svelte';
+	import InitialEnvironment from './scene1/InitialEnvironment.svelte';
 	import { animationScripts, scrollPercent } from '$lib/store';
-	import InitialForeground from './InitialForeground.svelte';
-	import { scrollSections } from '$lib/helpers/AnimationScrollSections';
+	import InitialForeground from './scene1/InitialForeground.svelte';
 	import LightAndCamera from './LightAndCamera.svelte';
+	import Scene2Timeline from './scene2/Scene2Timeline.svelte';
 
 	const { renderer } = useThrelte();
 	renderer.localClippingEnabled = true;
@@ -33,7 +33,7 @@
 
 <LightAndCamera />
 
-{#if $scrollPercent <= scrollSections[1].end}
-	<InitialEnvironment />
-	<InitialForeground />
-{/if}
+<InitialEnvironment />
+<InitialForeground />
+
+<Scene2Timeline />
