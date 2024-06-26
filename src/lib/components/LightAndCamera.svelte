@@ -2,19 +2,13 @@
 	import { T } from '@threlte/core';
 	import { OrbitControls, Stars } from '@threlte/extras';
 	import { onMount } from 'svelte';
-	import { quadInOut, quintInOut } from 'svelte/easing';
-	import { tweened } from 'svelte/motion';
-	import { Vector3, BufferGeometry, Color, type NormalBufferAttributes } from 'three';
+	import { animationScripts, cameraFOV, cameraXPos, scrollPercent } from '$lib/store';
+	import { scrollSections } from '$lib/helpers/AnimationScrollSections';
+	import { lerp, scalePercent } from '$lib/helpers/ThreeScroll';
+	import { degToRad } from 'three/src/math/MathUtils.js';
 
-	let cameraXPos = tweened(100, {
-		duration: 1000,
-		easing: quintInOut
-	});
-	let cameraFOV = tweened(180, {
-		duration: 2000,
-		easing: quadInOut
-	});
-
+	let cameraZpos = 0;
+	let cameraRotation = 90;
 	onMount(() => {
 		requestAnimationFrame(() => {
 			cameraXPos.set(30);
@@ -23,36 +17,41 @@
 		// Scroll to the top of the page
 		window.scrollTo(0, 0);
 	});
-	let aspectRatio = window.innerWidth / window.innerHeight; // Assuming your canvas takes up the whole window
-	let geometry: BufferGeometry<NormalBufferAttributes>;
-	$: {
-		let cameraPosition = new Vector3($cameraXPos, 4, 0);
-		let distance = cameraPosition.length();
-		let visibleHeight = 2 * Math.tan(($cameraFOV / 2) * (Math.PI / 180)) * distance;
-		let visibleWidth = visibleHeight * aspectRatio;
-		let points = [
-			new Vector3(-visibleWidth / 2, visibleHeight, -visibleWidth),
-			new Vector3(0, -visibleHeight / 2, visibleWidth / 2)
-		];
-
-		geometry = new BufferGeometry().setFromPoints(points);
-	}
+	animationScripts.update((currentValue) => {
+		currentValue.push({
+			section: scrollSections[2],
+			func: () => {
+				cameraZpos = lerp(
+					0,
+					-10,
+					scalePercent(scrollSections[2].start, scrollSections[2].end, $scrollPercent)
+				);
+				cameraRotation = lerp(
+					90,
+					120,
+					scalePercent(scrollSections[2].start, scrollSections[2].end, $scrollPercent)
+				);
+			},
+			clearFunc: () => {}
+		});
+		return currentValue;
+	});
 </script>
 
 <Stars />
 
 <T.PerspectiveCamera
 	makeDefault
-	position={[$cameraXPos, 4, 0]}
+	position={[$cameraXPos, 5, cameraZpos]}
 	fov={$cameraFOV}
+	far={150}
+	rotation={[0, degToRad(cameraRotation), 0]}
 	on:create={({ ref }) => {
 		// Look at the center
 		ref.lookAt(0, 0, 0);
 	}}
 >
-	<OrbitControls />
+	<!-- <OrbitControls /> -->
 </T.PerspectiveCamera>
-<T.Line {geometry}>
-	<T.LineBasicMaterial color={new Color('red')} />
-</T.Line>
+
 <T.AmbientLight intensity={1} />

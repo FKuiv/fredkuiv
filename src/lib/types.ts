@@ -6,6 +6,7 @@ type AnimationScrollSection = {
 export type AnimationScript = {
 	section: AnimationScrollSection;
 	func: () => void;
+	clearFunc: () => void;
 };
 
 export type AnimationScrollSections = {

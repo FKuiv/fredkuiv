@@ -14,6 +14,8 @@
 			scripts.forEach((script) => {
 				if ($scrollPercent >= script.section.start && $scrollPercent <= script.section.end) {
 					script.func();
+				} else {
+					script.clearFunc();
 				}
 			});
 		});

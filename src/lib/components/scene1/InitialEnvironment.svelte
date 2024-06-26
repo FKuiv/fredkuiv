@@ -43,7 +43,8 @@
 				const point = bgCurve.getPoint(currentPlanePos);
 				const tangent = bgCurve.getTangent(currentPlanePos).negate();
 				clippingPlane.setFromNormalAndCoplanarPoint(tangent, point);
-			}
+			},
+			clearFunc: () => {}
 		});
 		return currentValue;
 	});
