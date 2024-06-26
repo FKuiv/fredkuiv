@@ -11,6 +11,23 @@
 
 	animationScripts.update((currentValue) => {
 		currentValue.push({
+			section: scrollSections[1.5],
+			func: () => {
+				const scalePercentFunction = scalePercent(
+					scrollSections[1.5].start,
+					scrollSections[1.5].end,
+					$scrollPercent
+				);
+				points = [new Vector3(0, 2, 0), new Vector3(0, 2, lerp(0, 30, scalePercentFunction))];
+			},
+			clearFunc: () => {
+				if ($scrollPercent < scrollSections[1.5].start) {
+					points = [new Vector3(0, 0, 0), new Vector3(0, 0, 0)];
+				}
+			}
+		});
+
+		currentValue.push({
 			section: scrollSections[2],
 			func: () => {
 				const scalePercentFunction = scalePercent(
@@ -23,10 +40,7 @@
 					new Vector3(0, lerp(2, 10, scalePercentFunction), lerp(50, 30, scalePercentFunction))
 				];
 			},
-			clearFunc: () => {
-				// points = [new Vector3(0, 0, 0), new Vector3(0, 0, 0)];
-				console.log('Running in SCENE2TIMELINE');
-			}
+			clearFunc: () => {}
 		});
 		return currentValue;
 	});
