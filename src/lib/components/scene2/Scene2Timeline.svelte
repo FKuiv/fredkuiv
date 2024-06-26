@@ -51,5 +51,5 @@
 </script>
 
 <T.Line {geometry} position={getArrayCenter(points[0], points[1], true)}>
-	<T.LineBasicMaterial color={new Color('red')} />
+	<T.LineBasicMaterial color={'gray'} />
 </T.Line>
