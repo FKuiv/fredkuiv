@@ -12,5 +12,9 @@ export const scrollSections: AnimationScrollSections = {
 	2: {
 		start: 20,
 		end: 50
+	},
+	3: {
+		start: 40,
+		end: 70
 	}
 };

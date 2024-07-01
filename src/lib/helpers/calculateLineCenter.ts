@@ -20,7 +20,6 @@ export function getArrayCenter(
 	excludeY = false
 ): [x: number, y: number, z: number] {
 	const { x, y, z } = calculateLineCenter(pointA, pointB);
-	console.log(x, y, z);
 	if (excludeY) {
 		return [-x, pointA.y, -z];
 	} else {
