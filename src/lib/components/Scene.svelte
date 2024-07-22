@@ -4,6 +4,7 @@
 	import { animationScripts, scrollPercent } from '$lib/store';
 	import InitialForeground from './scene1/InitialForeground.svelte';
 	import LightAndCamera from './LightAndCamera.svelte';
+	import LinksCard from './LinksCard.svelte';
 
 	const { renderer } = useThrelte();
 	renderer.localClippingEnabled = true;
@@ -36,3 +37,5 @@
 
 <InitialEnvironment />
 <InitialForeground />
+
+<LinksCard />

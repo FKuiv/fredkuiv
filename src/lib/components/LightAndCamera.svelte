@@ -3,6 +3,7 @@
 	import { OrbitControls, Stars } from '@threlte/extras';
 	import { onMount } from 'svelte';
 	import { animationScripts, cameraFOV, cameraXPos } from '$lib/store';
+	import { SpotLight } from 'three';
 
 	onMount(() => {
 		requestAnimationFrame(() => {
@@ -33,3 +34,4 @@
 </T.PerspectiveCamera>
 
 <T.AmbientLight intensity={1} />
+<T.DirectionalLight position={[10, 2, -5]} intensity={1} castShadow />
