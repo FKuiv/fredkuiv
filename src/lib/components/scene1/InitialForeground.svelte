@@ -6,39 +6,29 @@
 	import { scrollSections } from '$lib/helpers/AnimationScrollSections';
 	import { lerp, scalePercent } from '$lib/helpers/ThreeScroll';
 
-	let cubeRotation = 0;
+	let cubeYRotation = 0;
+	let cubePosition: [x: number, y: number, z: number] = [0, 4, 0];
 	let cubeScale = [5, 5, 5];
-	let cubeVisibility = true;
 	animationScripts.update((currentValue) => {
 		currentValue.push({
 			section: scrollSections[1],
 			func: () => {
-				cubeVisibility = true;
-				cubeRotation = lerp(
-					0,
-					180,
-					scalePercent(scrollSections[1].start, scrollSections[1].end, $scrollPercent)
+				const scalePercentFunction = scalePercent(
+					scrollSections[1].start,
+					scrollSections[1].end,
+					$scrollPercent
 				);
-				cubeScale[1] = lerp(
-					5,
-					0,
-					scalePercent(scrollSections[1].start, scrollSections[1].end, $scrollPercent)
-				);
-				cubeScale[0] = lerp(
-					5,
-					0,
-					scalePercent(scrollSections[1].start, scrollSections[1].end, $scrollPercent)
-				);
+				cubeYRotation = lerp(0, 180, scalePercentFunction);
+
+				cubePosition = [0, lerp(4, 6, scalePercentFunction), lerp(0, -12, scalePercentFunction)];
 			},
-			clearFunc: () => {
-				cubeVisibility = false;
-			}
+			clearFunc: () => {}
 		});
 		return currentValue;
 	});
 </script>
 
-<T.Mesh position={[0, 4, 0]} rotation={[0, 0, degToRad(cubeRotation)]} visible={cubeVisibility}>
+<T.Mesh position={cubePosition} rotation={[0, degToRad(cubeYRotation), 0]}>
 	<T.BoxGeometry args={cubeScale} />
 	<T.MeshStandardMaterial color={new Color(0x00ff00)} wireframe />
 </T.Mesh>
