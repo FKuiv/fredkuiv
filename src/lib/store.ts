@@ -14,3 +14,5 @@ export const cameraFOV = tweened(180, {
 	duration: 2000,
 	easing: quadInOut
 });
+
+export const screenDimensions = writable({ width: 0, height: 0 });
