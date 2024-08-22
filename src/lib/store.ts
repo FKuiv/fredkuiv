@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { AnimationScript } from '$lib/types';
+import type { AnimationScript, StoryText } from '$lib/types';
 import { quadInOut, quintInOut } from 'svelte/easing';
 import { tweened } from 'svelte/motion';
 
@@ -16,3 +16,5 @@ export const cameraFOV = tweened(180, {
 });
 
 export const screenDimensions = writable({ width: 0, height: 0 });
+
+export const currentStoryText = writable<StoryText>({ title: '', description: '' });

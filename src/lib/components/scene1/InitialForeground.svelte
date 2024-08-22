@@ -13,11 +13,7 @@
 		currentValue.push({
 			section: scrollSections[1],
 			func: () => {
-				const scalePercentFunction = scalePercent(
-					scrollSections[1].start,
-					scrollSections[1].end,
-					$scrollPercent
-				);
+				const scalePercentFunction = scalePercent(scrollSections[1], $scrollPercent);
 				cubeYRotation = lerp(0, 180, scalePercentFunction);
 
 				cubePosition = [0, lerp(4, 6, scalePercentFunction), lerp(0, -12, scalePercentFunction)];

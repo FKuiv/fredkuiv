@@ -5,7 +5,7 @@
 	import InitialForeground from './scene1/InitialForeground.svelte';
 	import LightAndCamera from './LightAndCamera.svelte';
 	import LinksCard from './LinksCard.svelte';
-	import TextsContainer from './TextsContainer.svelte';
+	import TextsContainer from './story/TextsContainer.svelte';
 
 	const { renderer } = useThrelte();
 	renderer.localClippingEnabled = true;

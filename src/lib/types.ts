@@ -12,3 +12,14 @@ export type AnimationScript = {
 export type AnimationScrollSections = {
 	[key: number]: AnimationScrollSection;
 };
+
+export type StoryText = {
+	title: string;
+	description: string;
+};
+
+export type StoryCardPosition = {
+	position: [number, number, number];
+	rotation: [number, number, number];
+};
+export type StoryCardPositions = Record<number, StoryCardPosition>;

@@ -35,11 +35,7 @@
 		currentValue.push({
 			section: scrollSections[1],
 			func: () => {
-				currentPlanePos = lerp(
-					1,
-					0,
-					scalePercent(scrollSections[1].start, scrollSections[1].end, $scrollPercent)
-				);
+				currentPlanePos = lerp(1, 0, scalePercent(scrollSections[1], $scrollPercent));
 				const point = bgCurve.getPoint(currentPlanePos);
 				const tangent = bgCurve.getTangent(currentPlanePos).negate();
 				clippingPlane.setFromNormalAndCoplanarPoint(tangent, point);

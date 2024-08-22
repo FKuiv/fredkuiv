@@ -1,5 +1,6 @@
 import type { AnimationScrollSections } from '$lib/types';
 
+// The percentage of the total scroll
 export const scrollSections: AnimationScrollSections = {
 	1: {
 		start: 0,
@@ -11,14 +12,10 @@ export const scrollSections: AnimationScrollSections = {
 	},
 	2: {
 		start: 20,
-		end: 50
-	},
-	2.5: {
-		start: 40,
-		end: 50
+		end: 30
 	},
 	3: {
-		start: 51,
+		start: 29,
 		end: 70
 	}
 };

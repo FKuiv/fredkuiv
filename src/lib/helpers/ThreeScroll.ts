@@ -19,6 +19,6 @@ export function lerp(
  * end: the end of the scroll range. Should be the same as the end percentage of the animation
  * scrollPercent: the current scroll percentage
  */
-export function scalePercent(start: number, end: number, scrollPercent: number) {
-	return (scrollPercent - start) / (end - start);
+export function scalePercent(scrollBreaks: { start: number; end: number }, scrollPercent: number) {
+	return (scrollPercent - scrollBreaks.start) / (scrollBreaks.end - scrollBreaks.start);
 }
