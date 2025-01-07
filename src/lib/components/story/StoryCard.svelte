@@ -59,6 +59,15 @@
 				meshScale = 0;
 			}
 		});
+		currentValue.push({
+			section: scrollSections[3],
+			func: () => {
+				meshScale = lerp(0, 1, scalePercent(scrollSections[2], $scrollPercent));
+			},
+			clearFunc: () => {
+				meshScale = 0;
+			}
+		});
 		return currentValue;
 	});
 </script>
